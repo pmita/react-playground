@@ -43,7 +43,7 @@ function App() {
         </React.Fragment>
       ))}
 
-      {showModal && <Modal handleClose={handleClose}>
+      {showModal && <Modal handleClose={handleClose} isSalesModal={true}>
         <h2>10% off code</h2>
         <p>Use Panos at checkout</p>
       </Modal>}
