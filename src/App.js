@@ -4,16 +4,13 @@ import React, { useState } from 'react';
 import Title from './components/Title';
 import Modal from './components/Modal';
 import './App.css';
+import NewEventForm from './components/NewEventForm';
 
 function App() {
   //STATE & VARIALBES
   const [showModal, setShowModal] = useState(true);
   const [showEvents, setShowEvents] = useState(true);
-  const [events, setEvents] = useState([
-    {title: 'mario birthdat is bash', id: 1},
-    {title: 'browser live stream', id: 2},
-    {title: 'race on moo moo farm', id: 3},
-  ]);
+  const [events, setEvents] = useState([]);
 
   //EVENTS
   const handleClick = (id) => {
@@ -21,12 +18,14 @@ function App() {
       return prevState.filter(event => event.id !== id);
     })
   }
-
-  //FUNCTIONS
-  const handleClose = () => {
-    setShowModal(false)
+ 
+  //FUNCTIONS  
+  const addEvent = (event) => {
+    setEvents((prevEvents) => {
+      return [...prevEvents, event];
+    })
+    setShowModal(false); //hide modal after updating the list
   }
-
 
   return (
     <div className='App'>
@@ -43,10 +42,13 @@ function App() {
         </React.Fragment>
       ))}
 
-      {showModal && <Modal handleClose={handleClose} isSalesModal={true}>
-        <h2>10% off code</h2>
-        <p>Use Panos at checkout</p>
+      {showModal && <Modal isSalesModal={true}>
+        <NewEventForm addEvent={addEvent}/>
       </Modal>}
+
+      <div>
+        <button onClick={() => setShowModal(true)}>Add New Event</button>
+      </div>
     </div>
   );
 }
